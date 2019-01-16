@@ -1,14 +1,20 @@
 import React, {Component} from "react"
 
 class Students extends Component {
-  logout = () => {
-    Meteor.logout()
-  }
+
   render () {
+    const { students } = this.props
+    console.log(students)
     return (
     <div className="students">
       <p>Students</p>
-      <button onClick={this.logout}>Déconnexion</button>
+      <ul>
+        {students.map(({ profile: { firstname, lastname } }, _id) => (
+          <li key={_id}>
+            <span>{firstname} {lastname}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   )}
 }

@@ -6,7 +6,8 @@ const WithMenu = Component => {
     return (
       <div>
         <Menu/>
-        <Component/>
+        {(Component)}
+        <button onClick={() => Meteor.logout()}>Déconnexion</button>
       </div>
     )
 }
