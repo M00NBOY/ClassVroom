@@ -4,9 +4,13 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Router, Route, Switch, Redirect } from 'react-router';
 import createBrowserHistory from 'history/createBrowserHistory';
 
+// WithMenu
+import WithMenu from "./hoc/WithMenu.jsx";
+
 // views
-import Login from "./views/Login/Login.jsx"
 import Home from "./views/Home/Home.jsx"
+import Students from "./views/Students/Students.jsx"
+import Login from "./views/Login/Login.jsx"
 import Register from "./views/Register/Register.jsx"
 
 // Browser history
@@ -24,9 +28,23 @@ class App extends Component {
     return (
       <Router history={history}>
         <Switch>
+        <Route exact path="/" render={() => (
+            user ? (
+              WithMenu(Home)
+            ) : (
+              <Redirect to="/login"/>
+            )
+          )}/>
+          <Route exact path="/students" render={() => (
+            user ? (
+              WithMenu(Students)
+            ) : (
+              <Redirect to="/login"/>
+            )
+          )}/>
           <Route exact path="/" render={() => (
             user ? (
-              <Home/>
+              WithMenu(Home)
             ) : (
               <Redirect to="/login"/>
             )
