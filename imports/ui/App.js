@@ -4,9 +4,6 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Router, Route, Switch, Redirect } from 'react-router';
 import createBrowserHistory from 'history/createBrowserHistory';
 
-// WithMenu
-import WithMenu from "./hoc/WithMenu.jsx";
-
 // views
 import Home from "./views/Home/Home.jsx"
 import Students from "./views/Students/Students.jsx"
@@ -30,21 +27,21 @@ class App extends Component {
         <Switch>
         <Route exact path="/" render={() => (
             user ? (
-              WithMenu(Home)
+              <Home />
             ) : (
               <Redirect to="/login"/>
             )
           )}/>
           <Route exact path="/students" render={() => (
             user ? (
-              WithMenu(Students)
+              <Students students={this.props.students} />
             ) : (
               <Redirect to="/login"/>
             )
           )}/>
           <Route exact path="/" render={() => (
             user ? (
-              WithMenu(Home)
+              <Home/>
             ) : (
               <Redirect to="/login"/>
             )
@@ -70,11 +67,14 @@ class App extends Component {
 }
 
 export default withTracker(() => {
-  console.log(Meteor.userId())
+  console.log()
   console.log("logging",Meteor.loggingIn())
-
+  if (Meteor.userId()) {
+    Meteor.subscribe('users')
+  }
   return {
     isLogging: Meteor.loggingIn(),
-    user: Meteor.user()
+    user: Meteor.user(),
+    students: Meteor.users.find().fetch()
   };
 })(App);
