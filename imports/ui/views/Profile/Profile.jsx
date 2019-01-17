@@ -6,16 +6,22 @@ import IsLogged from '../../hoc/IsLogged'
 
 class Profile extends Component {
 
+
+
   render () {
     const {
       currentUser = {}
     } = this.props
 
-    const { profile: { firstname, lastname } = {} } = currentUser
+    const { profile: { firstname, lastname, github } = {} } = currentUser
 
     return(
       <div>
-        {`Bonjour ${firstname} ${lastname}!`}
+        <p>{`Bonjour ${firstname} ${lastname}!`}</p>
+        {github && (<p>Github: <a href={github}>{github}</a></p>)}
+        <Link to="/profile/edit">Editer</Link>
+        <Link to="/profile/changepassword">Changer votre mot de passe</Link>
+        <Link to="/profile/deleteaccount">Fermer le compte</Link>
       </div>
     )
   }
