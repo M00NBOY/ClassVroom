@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-
+import WithMenu from '../../hoc/WithMenu'
 class Home extends Component {
 
   render () {
@@ -10,4 +10,4 @@ class Home extends Component {
   )}
 }
 
-export default Home
+export default WithMenu(Home)
