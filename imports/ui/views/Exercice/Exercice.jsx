@@ -1,4 +1,6 @@
 import React, {Component} from "react"
+import WithMenu from "../../hoc/WithMenu.jsx"
+import IsLogged from "../../hoc/IsLogged.jsx"
 
 class Exercice extends Component {
   logout = () => {
@@ -8,9 +10,8 @@ class Exercice extends Component {
     return (
     <div className="exercice">
       <p>Exercice</p>
-      <button onClick={this.logout}>Déconnexion</button>
     </div>
   )}
 }
 
-export default Exercice
+export default IsLogged(WithMenu(Exercice))

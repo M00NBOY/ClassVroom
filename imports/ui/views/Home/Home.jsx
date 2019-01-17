@@ -1,7 +1,8 @@
 import React, {Component} from "react"
 import WithMenu from '../../hoc/WithMenu'
-class Home extends Component {
+import IsLogged from '../../hoc/IsLogged'
 
+class Home extends Component {
   render () {
     return (
     <div className="home">
@@ -10,4 +11,4 @@ class Home extends Component {
   )}
 }
 
-export default WithMenu(Home)
+export default IsLogged(WithMenu(Home))
