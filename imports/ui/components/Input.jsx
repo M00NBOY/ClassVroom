@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 
 class Input extends React.Component {
   constructor (props) {
@@ -10,9 +11,19 @@ class Input extends React.Component {
   }
 
   render () {
-    const { label, value, type } = this.props
+    const { label, value, type, placeholder, error, errormessage } = this.props
     return (
-      <input id={ label } type={ type } value={ value } onChange={ this.updateValue } />
+      <div className="input-wrapper">
+        <input id={ label }
+               type={ type }
+               value={ value }
+               placeholder={ placeholder }
+               onChange={ this.updateValue }
+               className={classNames('input', { 'input--alert': error })} />
+        { error && (
+          <span className="input-message">{ errormessage }</span>
+        )}
+      </div>
     )
   }
 }

@@ -7,6 +7,7 @@ import createBrowserHistory from 'history/createBrowserHistory';
 // views
 import Home from "./views/Home/Home.jsx"
 import Students from "./views/Students/Students.jsx"
+import StudentProfile from "./views/Students/StudentProfile"
 import Login from "./views/Login/Login.jsx"
 import Register from "./views/Register/Register.jsx"
 import Exercice from "./views/Exercice/Exercice.jsx"
@@ -19,6 +20,10 @@ import ProfileDeleteAccount from "./views/Profile/ProfileDeleteAccount.jsx"
 // Browser history
 const history = createBrowserHistory();
 
+// const WithRouterProps = props => (
+
+// )
+
 // App component - represents the whole app
 class App extends Component {
   constructor(props) {
@@ -27,20 +32,20 @@ class App extends Component {
   
   render() {
     const { user, userId, students } = this.props
-    
     return (
       <Router history={history}>
         <Switch>
-          <Route exact path="/" render={() => <Home userId={userId} />}/>
-          <Route exact path="/students" render={() => <Students userId={userId} students={students} /> }/>
-          <Route exact path="/exercice" render={() => <Exercice userId={userId} />}/>
-          <Route exact path="/profile" render={() => <Profile userId={userId} currentUser={user}/>}/>
-          <Route exact path="/profile/edit" render={() => <ProfileEdit userId={userId} currentUser={user}/>}/>
-          <Route exact path="/profile/changepassword" render={() => <ProfileChangePassword userId={userId}/>}/>
-          <Route exact path="/profile/deleteaccount" render={() => <ProfileDeleteAccount userId={userId}/>}/>
+          <Route exact path="/"                       component={Home} />
+          <Route exact path="/students"               component={Students}/>
+          <Route exact path="/students/:studentId"    render={props => <StudentProfile  {...props} /> }/>
+          <Route exact path="/exercice"               render={props => <Exercice />}/>
+          <Route exact path="/profile"                render={props => <Profile        currentUser={user}/>}/>
+          <Route exact path="/profile/edit"           render={props => <ProfileEdit    currentUser={user}/>}/>
+          <Route exact path="/profile/changepassword" render={props => <ProfileChangePassword />}/>
+          <Route exact path="/profile/deleteaccount"  render={props => <ProfileDeleteAccount />}/>
 
-          <Route exact path="/register" render={() => !userId ? <Register/> : <Redirect to="/"/>}/>
-          <Route exact path="/login" render={()=> !userId ? <Login/> : <Redirect to="/"/>}/>
+          <Route exact path="/register"               render={props => !userId ? <Register/> : <Redirect to="/"/>}/>
+          <Route exact path="/login"                  render={props => !userId ? <Login/> : <Redirect to="/"/>}/>
         </Switch>
       </Router>
     );

@@ -1,0 +1,19 @@
+.input {
+  &-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  
+  &-message {
+    position: absolute;
+    right: 0;
+    top: -20px;
+  }
+
+  &--alert {
+    border: 1px solid $alert-color !important;
+    background-image: url('../img/alert.png');
+    background-position: 10px;
+    background-repeat: no-repeat; 
+  }
+}

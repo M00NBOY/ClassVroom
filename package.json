@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
+    "classnames": "^2.2.6",
     "history": "^4.7.2",
     "meteor-node-stubs": "^0.4.1",
     "react": "^16.7.0",
