@@ -9,11 +9,7 @@ class Profile extends Component {
 
 
   render () {
-    const {
-      currentUser = {}
-    } = this.props
-
-    const { profile: { firstname, lastname, github } = {} } = currentUser
+    const { firstname, lastname, github } = this.props.currentUser ? this.props.currentUser.profile : {}
 
     return(
       <div>

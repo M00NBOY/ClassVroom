@@ -35,7 +35,9 @@ class App extends Component {
     return (
       <Router history={history}>
         <Switch>
-          <Route exact path="/"                       component={Home} />
+          {/* <Route exact path="/"                       component={Home} /> */}
+          <Route exact path="/"                       render={props => <Home {...props} /> }/>
+
           <Route exact path="/students"               component={Students}/>
           <Route exact path="/students/:studentId"    render={props => <StudentProfile  {...props} /> }/>
           <Route exact path="/exercice"               render={props => <Exercice />}/>

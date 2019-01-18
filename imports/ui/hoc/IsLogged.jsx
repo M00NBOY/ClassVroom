@@ -14,8 +14,16 @@ const IsLogged = WrappedComponent => (
       }
     }
 
-    componentDidMount() {
-      Tracker.autorun(() => {
+    componentDidMount = () => {
+      setTimeout(this.startComputation, 0);
+    }
+
+    componentWillUnmount = () => {
+      this.autorun.stop()
+    }
+
+    startComputation = () => {
+      this.autorun = Tracker.autorun(() => {
         const logged = Meteor.userId()
         const loading = Meteor.loggingIn()
         this.setState({ logged, loading })
