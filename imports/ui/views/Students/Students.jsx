@@ -1,5 +1,6 @@
 import React, {Component} from "react"
 import WithMenu from '../../hoc/WithMenu'
+import IsLogged from '../../hoc/IsLogged'
 
 class Students extends Component {
 
@@ -20,4 +21,4 @@ class Students extends Component {
   )}
 }
 
-export default WithMenu(Students)
+export default IsLogged(WithMenu(Students))

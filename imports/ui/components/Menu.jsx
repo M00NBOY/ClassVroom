@@ -8,7 +8,8 @@ class Menu extends Component {
         <ul>
           <li><Link to="/">Accueil</Link></li>
           <li><Link to="/students">Etudiants</Link></li>
-          <li><Link to="/exercises">Exercices</Link></li>
+          <li><Link to="/exercice">Exercices</Link></li>
+          <li><Link to="/profile">Profil</Link></li>
         </ul>
       </nav>
     )
