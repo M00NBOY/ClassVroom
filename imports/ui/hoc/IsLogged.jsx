@@ -19,7 +19,7 @@ const IsLogged = WrappedComponent => (
     }
 
     componentWillUnmount = () => {
-      this.autorun.stop()
+      this.autorun ? this.autorun.stop() : null
     }
 
     startComputation = () => {

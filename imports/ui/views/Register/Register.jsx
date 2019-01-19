@@ -12,7 +12,14 @@ class Register extends Component {
       lastname: "",
       firstname: "",
       password: "",
-      confirmpassword: ""
+      confirmpassword: "",
+      errors: {
+        email: false,
+        lastname: false,
+        firstname: false,
+        password: false,
+        confirmpassword: false,
+      }
     }
   }
 
@@ -22,13 +29,20 @@ class Register extends Component {
     })
   }
 
+  handleError () {
+    const {lastname, firstname, password, confirmpassword} = this.state
+    this.setState ({
+      errors: {
+        ...this.state.errors, lastname: !lastname, firstname: !firstname, password: password.length<8, confirmpassword: password!==confirmpassword
+      }
+    })
+    return !lastname || !firstname || password.length<8 || password!==confirmpassword
+  }
+
   submit = (e) => {
     e.preventDefault()
-
     const { email, password, confirmpassword, firstname, lastname } = this.state
-
-    if (password !== confirmpassword) return
-    
+    if (this.handleError()) return
     Accounts.createUser({
       email,
       password,
@@ -36,26 +50,33 @@ class Register extends Component {
         firstname,
         lastname
       }
-    }, err => err ? console.log(err) : console.log("No error"))
+    }, err => {
+      if(err) {
+        this.setState({
+          errors: {
+            ...this.state.errors, email: err.reason === "Email already exists."
+          }
+        })
+      }
+    })
   }
 
   render () {
-    const { email, password, confirmpassword, firstname, lastname } = this.state
-
+    const { email, password, confirmpassword, firstname, lastname, errors } = this.state
     return (
     <div className="register">
       <h3>Créer un compte</h3>
       <form onSubmit={ this.submit }>
         <label htmlFor="email">Email</label>
-        <Input label="email" value={email} type="text" errormessage="Cette addresse email est déjà utilisée" onUpdate={ this.updateValue }/>
+        <Input label="email" value={email} type="email" errormessage="Cette addresse email est déjà utilisée" error={errors.email} onUpdate={ this.updateValue }/>
         <label htmlFor="lastname">Nom</label>
-        <Input label="lastname" value={lastname} type="text" onUpdate={ this.updateValue }/>
+        <Input label="lastname" value={lastname} type="text" errormessage="Ce champ doit être renseigné" error={errors.lastname} onUpdate={ this.updateValue }/>
         <label htmlFor="firstname">Prénom</label>
-        <Input label="firstname" value={firstname} type="text" onUpdate={ this.updateValue }/>
+        <Input label="firstname" value={firstname} type="text" errormessage="Ce champ doit être renseigné" error={errors.firstname} onUpdate={ this.updateValue }/>
         <label htmlFor="password">Mot de passe</label>
-        <Input label="password" value={password} type="password" onUpdate={ this.updateValue }/>
+        <Input label="password" value={password} type="password" errormessage="Le mot de passe doit comporter 8 caractère ou plus" error={errors.password} onUpdate={ this.updateValue }/>
         <label htmlFor="confirm-password">Confirmer mot de passe</label>
-        <Input label="confirmpassword" value={confirmpassword} type="password" onUpdate={ this.updateValue }/>
+        <Input label="confirmpassword" value={confirmpassword} type="password" errormessage="Confirmez mieux votre mot de passe" error={errors.confirmpassword} onUpdate={ this.updateValue }/>
         <input type="submit" value="Créer son compte"/>
       </form>
       <Link to="/">Se connecter</Link>
