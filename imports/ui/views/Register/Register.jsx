@@ -43,7 +43,7 @@ class Register extends Component {
     e.preventDefault()
     const { email, password, confirmpassword, firstname, lastname } = this.state
     if (this.handleError()) return
-    Accounts.createUser({
+    let id = Accounts.createUser({
       email,
       password,
       profile: {
@@ -57,6 +57,8 @@ class Register extends Component {
             ...this.state.errors, email: err.reason === "Email already exists."
           }
         })
+      } else {
+        Meteor.call("addStudentRole")
       }
     })
   }
